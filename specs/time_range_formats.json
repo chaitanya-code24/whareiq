@@ -1,0 +1,67 @@
+{
+  "version": "v1",
+  "description": "Supported time range formats for WhareIQ V1 semantic plans",
+
+  "time_range_types": [
+    {
+      "type": "relative_days",
+      "description": "Last N days relative to today",
+      "required_fields": ["last_n_days"],
+      "example": {
+        "type": "relative_days",
+        "last_n_days": 7
+      }
+    },
+    {
+      "type": "relative_months",
+      "description": "Last N months relative to current date",
+      "required_fields": ["last_n_months"],
+      "example": {
+        "type": "relative_months",
+        "last_n_months": 6
+      }
+    },
+    {
+      "type": "this_month",
+      "description": "Current calendar month",
+      "required_fields": [],
+      "example": {
+        "type": "this_month"
+      }
+    },
+    {
+      "type": "this_year",
+      "description": "Current calendar year",
+      "required_fields": [],
+      "example": {
+        "type": "this_year"
+      }
+    },
+    {
+      "type": "last_month",
+      "description": "Previous calendar month",
+      "required_fields": [],
+      "example": {
+        "type": "last_month"
+      }
+    },
+    {
+      "type": "last_year",
+      "description": "Previous calendar year",
+      "required_fields": [],
+      "example": {
+        "type": "last_year"
+      }
+    },
+    {
+      "type": "absolute_range",
+      "description": "Fixed start and end date",
+      "required_fields": ["start_date", "end_date"],
+      "example": {
+        "type": "absolute_range",
+        "start_date": "2024-01-01",
+        "end_date": "2024-06-30"
+      }
+    }
+  ]
+}
