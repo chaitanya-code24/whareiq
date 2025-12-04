@@ -1,35 +1,89 @@
+# WhareIQ
+
+WhareIQ is a **Semantic SQL & Data Warehouse Intelligence Engine** that allows users to query structured databases using natural language and receive **trusted, explainable, real-time answers**.
+
+It is designed to be a **pure semantic query engine** for analytics and business intelligence — without VectorDB, embeddings, or document RAG.
+
 ---
 
-## ✅ WhareIQ V1 Task Tracker
+## 💡 What WhareIQ Does
 
-(Tracked via GitHub Issues)
+WhareIQ converts natural language questions into:
 
-### STEP 1 — Semantic Plan Engine
-- [ ] #1 Universal semantic plan JSON schema
-- [ ] #2 Allowed metric operations
-- [ ] #3 Time range formats
-- [ ] #4 Planner LLM prompt
-- [ ] #5 /plan API endpoint
-- [ ] #6 Clarification fallback logic
+Natural Language → Semantic Plan → SQL → Secure Execution → Trusted Data
 
-### STEP 2 — Schema Introspection & Auto-Mapping
-- [ ] #7 Database connection module
-- [ ] #8 Physical schema reader
-- [ ] #9 Logical domain detection
-- [ ] #10 Measure auto-mapping
-- [ ] #11 Dimension auto-mapping
-- [ ] #12 Semantic mapping storage
+It enables:
+- Founders to ask business questions without SQL
+- Analysts to get exact queries and tables
+- Developers to integrate semantic querying via API
 
-### STEP 3 — Semantic → SQL Translator
-- [ ] #13 Measure resolver
-- [ ] #14 Dimension resolver
-- [ ] #15 Join resolver
-- [ ] #16 Time filter resolver
-- [ ] #17 SQL builder
+All answers are generated from the **source-of-truth database**, not from approximated embeddings.
 
-### STEP 4 — Security & Execution
-- [ ] #18 SQL validator
-- [ ] #19 Allowlist validator
-- [ ] #20 Row limit enforcement
-- [ ] #21 Query timeout
-- [ ] #22 Secure execution
+---
+
+## ✅ Core Features (V1 Focus)
+
+- Universal Semantic Plan Engine  
+- Automatic Schema Introspection  
+- Semantic → SQL Translation  
+- Secure, Read-Only SQL Execution  
+- Structured Machine Output + Human Summary  
+
+No Vector Search. No Document Chat. No Guesswork.
+
+---
+
+## 🏗️ High-Level Architecture
+
+1. Natural Language Input  
+2. Semantic Plan Generation  
+3. Schema Mapping & Resolution  
+4. Deterministic SQL Generation  
+5. SQL Safety Validation  
+6. Secure Database Execution  
+7. Structured Result Output  
+
+---
+
+## 🎯 Design Principles
+
+- Deterministic over probabilistic  
+- Explainable over opaque  
+- Source-of-truth over approximated recall  
+- Security-first execution  
+- Database-native semantics  
+
+---
+
+## 🧪 Current Status
+
+WhareIQ is in **active V1 development**.
+
+All development work is tracked exclusively using **GitHub Issues**.
+
+---
+
+## 🔐 Security Model (V1)
+
+- Read-only database access
+- SELECT-only query enforcement
+- Table & column allow-listing
+- Hard row limits
+- Query timeouts
+
+---
+
+## 📌 Long-Term Vision
+
+WhareIQ aims to become a universal **semantic intelligence layer for data warehouses**, capable of powering:
+
+- AI-powered BI
+- Operational analytics
+- Embedded analytics in SaaS products
+- Decision intelligence systems
+
+---
+
+## 📄 License
+
+TBD
