@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WhareIQ Semantic Plan Schema v1",
+  "description": "Universal semantic query plan produced from natural language input",
+  "type": "object",
+  "required": ["needs_clarification"],
+
+  "properties": {
+    "needs_clarification": {
+      "type": "boolean",
+      "description": "True if the user query is too ambiguous to execute"
+    },
+
+    "clarification_question": {
+      "type": ["string", "null"],
+      "description": "Follow-up question if clarification is required"
+    },
+
+    "plan": {
+      "type": ["object", "null"],
+      "description": "Semantic query plan if enough information is available",
+      "required": [
+        "intent_type",
+        "measures",
+        "dimensions",
+        "filters",
+        "sorting",
+        "limit",
+        "confidence_level"
+      ],
+
+      "properties": {
+        "intent_type": {
+          "type": "string",
+          "description": "High-level analytical intent such as aggregation, comparison, trend, ranking"
+        },
+
+        "measures": {
+          "type": "array",
+          "description": "Metrics to be computed",
+          "items": {
+            "type": "object",
+            "required": ["name", "operation"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Logical metric name, e.g., revenue, users, orders"
+              },
+              "operation": {
+                "type": "string",
+                "enum": ["sum", "count", "avg", "min", "max", "distinct_count"]
+              }
+            }
+          }
+        },
+
+        "dimensions": {
+          "type": "array",
+          "description": "Grouping dimensions",
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "time_range": {
+          "type": ["object", "null"],
+          "description": "Temporal filter for the query",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["relative", "absolute"]
+            },
+            "last_n_days": {
+              "type": ["integer", "null"]
+            },
+            "last_n_months": {
+              "type": ["integer", "null"]
+            },
+            "start_date": {
+              "type": ["string", "null"],
+              "format": "date"
+            },
+            "end_date": {
+              "type": ["string", "null"],
+              "format": "date"
+            }
+          }
+        },
+
+        "filters": {
+          "type": "array",
+          "description": "Non-temporal filters",
+          "items": {
+            "type": "object",
+            "required": ["field", "operator", "value"],
+            "properties": {
+              "field": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string",
+                "enum": ["=", "!=", ">", ">=", "<", "<=", "in", "not_in", "like"]
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+
+        "sorting": {
+          "type": "array",
+          "description": "Sorting rules",
+          "items": {
+            "type": "object",
+            "required": ["field", "direction"],
+            "properties": {
+              "field": {
+                "type": "string"
+              },
+              "direction": {
+                "type": "string",
+                "enum": ["asc", "desc"]
+              }
+            }
+          }
+        },
+
+        "limit": {
+          "type": ["integer", "null"],
+          "description": "Maximum number of rows to return"
+        },
+
+        "confidence_level": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "LLM confidence in semantic understanding"
+        }
+      }
+    }
+  }
+}
