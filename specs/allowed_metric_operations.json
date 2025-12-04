@@ -1,0 +1,36 @@
+{
+  "version": "v1",
+  "description": "Allowed metric aggregation operations for WhareIQ V1",
+  "operations": [
+    {
+      "name": "sum",
+      "description": "Total of all numeric values in the selected field",
+      "example_metrics": ["revenue", "sales_amount", "total_cost"]
+    },
+    {
+      "name": "count",
+      "description": "Total number of rows",
+      "example_metrics": ["orders", "transactions", "records"]
+    },
+    {
+      "name": "avg",
+      "description": "Average of numeric values",
+      "example_metrics": ["price", "order_value", "session_duration"]
+    },
+    {
+      "name": "min",
+      "description": "Minimum value in the selected field",
+      "example_metrics": ["price", "temperature", "balance"]
+    },
+    {
+      "name": "max",
+      "description": "Maximum value in the selected field",
+      "example_metrics": ["price", "temperature", "balance"]
+    },
+    {
+      "name": "distinct_count",
+      "description": "Number of unique values in the selected field",
+      "example_metrics": ["users", "customers", "products"]
+    }
+  ]
+}
