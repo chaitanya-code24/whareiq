@@ -83,7 +83,3 @@ WhareIQ aims to become a universal **semantic intelligence layer for data wareho
 - Decision intelligence systems
 
 ---
-
-## 📄 License
-
-TBD
