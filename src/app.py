@@ -55,6 +55,31 @@ def generate_plan(payload: PlanRequest):
             user_input=payload.question
         )
 
+        # -----------------------------
+        # Clarification Fallback Logic
+        # -----------------------------
+        if plan_json.get("needs_clarification") is True:
+            return {
+                "needs_clarification": True,
+                "clarification_question": plan_json.get("clarification_question"),
+                "plan": None
+            }
+
+        # -----------------------------
+        # Confidence Safety Check
+        # -----------------------------
+        confidence = plan_json.get("plan", {}).get("confidence_level")
+
+        if confidence == "low":
+            return {
+                "needs_clarification": True,
+                "clarification_question": "Your question is ambiguous. Please provide more details.",
+                "plan": None
+            }
+
+        # -----------------------------
+        # Normal Safe Return
+        # -----------------------------
         return plan_json
 
     except Exception as e:
