@@ -11,6 +11,7 @@ app = FastAPI(
     version="v1"
 )
 
+
 # ---------------------------------
 # Request / Response Models
 # ---------------------------------
@@ -35,6 +36,7 @@ with open("specs/planner_prompt.txt", "r") as f:
 # ---------------------------------
 llm = UniversalLLM(provider="groq")
 
+
 # ---------------------------------
 # Health Check
 # ---------------------------------
@@ -48,42 +50,47 @@ def health_check():
 # ---------------------------------
 @app.post("/plan", response_model=PlanResponse)
 def generate_plan(payload: PlanRequest):
-
     try:
         plan_json = llm.generate_json(
             system_prompt=PLANNER_PROMPT,
-            user_input=payload.question
+            user_input=payload.question,
         )
-
-        # -----------------------------
-        # Clarification Fallback Logic
-        # -----------------------------
-        if plan_json.get("needs_clarification") is True:
-            return {
-                "needs_clarification": True,
-                "clarification_question": plan_json.get("clarification_question"),
-                "plan": None
-            }
-
-        # -----------------------------
-        # Confidence Safety Check
-        # -----------------------------
-        confidence = plan_json.get("plan", {}).get("confidence_level")
-
-        if confidence == "low":
-            return {
-                "needs_clarification": True,
-                "clarification_question": "Your question is ambiguous. Please provide more details.",
-                "plan": None
-            }
-
-        # -----------------------------
-        # Normal Safe Return
-        # -----------------------------
-        return plan_json
-
+    except ValueError as e:
+        # LLM / schema-related issues – bad request from semantic layer
+        raise HTTPException(
+            status_code=400,
+            detail=f"Plan generation failed: {str(e)}",
+        )
     except Exception as e:
+        # Unexpected internal errors
         raise HTTPException(
             status_code=500,
-            detail=f"Plan generation failed: {str(e)}"
+            detail=f"Plan generation failed: {str(e)}",
         )
+
+    # -----------------------------
+    # Clarification Fallback Logic
+    # -----------------------------
+    if plan_json.get("needs_clarification") is True:
+        return {
+            "needs_clarification": True,
+            "clarification_question": plan_json.get("clarification_question"),
+            "plan": None,
+        }
+
+    # -----------------------------
+    # Confidence Safety Check
+    # -----------------------------
+    confidence = plan_json.get("plan", {}).get("confidence_level")
+
+    if confidence == "low":
+        return {
+            "needs_clarification": True,
+            "clarification_question": "Your question is ambiguous. Please provide more details.",
+            "plan": None,
+        }
+
+    # -----------------------------
+    # Normal Safe Return
+    # -----------------------------
+    return plan_json
