@@ -34,7 +34,8 @@ def load_physical_schema():
         cursor.execute("""
             SELECT table_name
             FROM information_schema.tables
-            WHERE table_schema = 'public';
+            WHERE table_schema = 'public'
+            AND table_name NOT IN ('semantic_mappings');
         """)
         tables = [row[0] for row in cursor.fetchall()]
 
