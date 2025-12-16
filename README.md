@@ -8,7 +8,6 @@
 [![Status](https://img.shields.io/badge/status-stable-success.svg)](#)
 [![Architecture](https://img.shields.io/badge/architecture-deterministic-informational.svg)](#)
 [![Security](https://img.shields.io/badge/security-read--only-critical.svg)](#)
-[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](#)
 
 </div>
 
