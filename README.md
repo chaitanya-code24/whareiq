@@ -1,3 +1,34 @@
+<div align="center">
+
+# WhareIQ
+
+**Semantic SQL & Data Warehouse Intelligence Engine**
+
+[![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)](#)
+[![Status](https://img.shields.io/badge/status-stable-success.svg)](#)
+[![Architecture](https://img.shields.io/badge/architecture-deterministic-informational.svg)](#)
+[![Security](https://img.shields.io/badge/security-read--only-critical.svg)](#)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](#)
+
+</div>
+
+---
+
+## Overview
+
+**WhareIQ** is a **semantic SQL and data warehouse intelligence engine** that allows users to query structured databases using **natural language**, while guaranteeing **deterministic, explainable, and secure execution**.
+
+Unlike typical LLM-based analytics tools, WhareIQ is designed as a **pure semantic query engine** for business intelligence —  
+**no vector databases, no embeddings, no document RAG, and no probabilistic answers**.
+
+All results are generated directly from the **source-of-truth database**.
+
+---
+
+## What WhareIQ Does
+
+WhareIQ transforms natural language questions into a secure and auditable execution pipeline:
+
 
 It enables:
 
