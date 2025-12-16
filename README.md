@@ -17,10 +17,11 @@
 
 **WhareIQ** is a **semantic SQL and data warehouse intelligence engine** that allows users to query structured databases using **natural language**, while guaranteeing **deterministic, explainable, and secure execution**.
 
-Unlike typical LLM-based analytics tools, WhareIQ is designed as a **pure semantic query engine** for business intelligence 
+Unlike typical LLM-based analytics tools, WhareIQ is designed as a **pure semantic query engine** for business intelligence —
 **no vector databases, no embeddings, no document RAG, and no probabilistic answers**.
 
-Natural Language → Semantic Plan → SQL → Secure Execution → Trusted Data
+**Natural Language → Semantic Plan → SQL → Secure Execution → Trusted Data**
+
 
 All results are generated directly from the **source-of-truth database**.
 
@@ -29,6 +30,8 @@ All results are generated directly from the **source-of-truth database**.
 ## What WhareIQ Does
 
 WhareIQ transforms natural language questions into a secure and auditable execution pipeline:
+
+**Natural Language → Semantic Plan → SQL → Secure Execution → Trusted Data**
 
 
 It enables:
