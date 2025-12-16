@@ -20,9 +20,6 @@
 Unlike typical LLM-based analytics tools, WhareIQ is designed as a **pure semantic query engine** for business intelligence —
 **no vector databases, no embeddings, no document RAG, and no probabilistic answers**.
 
-**Natural Language → Semantic Plan → SQL → Secure Execution → Trusted Data**
-
-
 All results are generated directly from the **source-of-truth database**.
 
 ---
