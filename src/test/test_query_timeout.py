@@ -1,4 +1,4 @@
-from query_timeout import execute_with_timeout
+from src.query_timeout import execute_with_timeout
 
 # Fast query (should succeed)
 print("\n✅ TEST 1 (FAST QUERY)")

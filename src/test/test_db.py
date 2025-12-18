@@ -1,4 +1,4 @@
-from db import get_db_connection, release_db_connection
+from src.db import get_db_connection, release_db_connection
 
 try:
     conn = get_db_connection()

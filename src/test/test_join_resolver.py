@@ -1,6 +1,6 @@
-from measure_resolver import resolve_measures
-from dimension_resolver import resolve_dimensions
-from join_resolver import build_join_plan
+from src.measure_resolver import resolve_measures
+from src.dimension_resolver import resolve_dimensions
+from src.join_resolver import build_join_plan
 
 # For now your schema only has 'users' table with email + name
 test_plan = {

@@ -1,4 +1,4 @@
-from semantic_storage import store_semantic_mappings, load_semantic_mappings
+from src.semantic_storage import store_semantic_mappings, load_semantic_mappings
 
 try:
     store_semantic_mappings()

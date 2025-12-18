@@ -1,5 +1,5 @@
-from measure_auto_mapper import build_measure_map
-from dimension_auto_mapper import build_dimension_map
+from src.measure_auto_mapper import build_measure_map
+from src.dimension_auto_mapper import build_dimension_map
 
 try:
     measures = build_measure_map()

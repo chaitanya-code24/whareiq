@@ -1,4 +1,4 @@
-from measure_resolver import resolve_measures
+from src.measure_resolver import resolve_measures
 
 # Fake semantic plan for now – no measures yet
 test_plan = {

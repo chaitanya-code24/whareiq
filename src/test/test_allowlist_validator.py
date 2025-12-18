@@ -1,4 +1,4 @@
-from allowlist_validator import validate_allowlist
+from src.allowlist_validator import validate_allowlist
 
 # SAFE: only semantic dimensions
 safe_sql = "SELECT users.email AS email, users.name AS name FROM users LIMIT 10"

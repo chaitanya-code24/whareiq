@@ -1,4 +1,4 @@
-from dimension_resolver import resolve_dimensions
+from src.dimension_resolver import resolve_dimensions
 
 # Fake semantic plan using your existing dimensions
 test_plan = {

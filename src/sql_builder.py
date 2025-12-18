@@ -4,9 +4,7 @@ from join_resolver import build_join_plan
 from time_filter_resolver import resolve_time_filter
 
 
-# ---------------------------------
-# Full SQL Builder (Production V1)
-# ---------------------------------
+
 
 def build_sql(plan: dict):
     """

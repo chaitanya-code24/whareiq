@@ -1,4 +1,4 @@
-from schema_reader import load_physical_schema
+from src.schema_reader import load_physical_schema
 
 try:
     schema = load_physical_schema()

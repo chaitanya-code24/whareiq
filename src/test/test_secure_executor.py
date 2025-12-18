@@ -1,4 +1,4 @@
-from secure_executor import execute_semantic_query
+from src.secure_executor import execute_semantic_query
 
 # Semantic plan matching your current DB
 test_plan = {

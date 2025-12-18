@@ -1,4 +1,4 @@
-from limit_enforcer import enforce_limit
+from src.limit_enforcer import enforce_limit
 
 sql_no_limit = "SELECT users.email FROM users"
 sql_small_limit = "SELECT users.email FROM users LIMIT 50"

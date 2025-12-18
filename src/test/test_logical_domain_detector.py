@@ -1,4 +1,4 @@
-from logical_domain_detector import build_logical_domain_map
+from src.logical_domain_detector import build_logical_domain_map
 
 try:
     logical_schema = build_logical_domain_map()

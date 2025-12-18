@@ -1,4 +1,4 @@
-from sql_builder import build_sql
+from src.sql_builder import build_sql
 
 # Matches your current DB: users(email, name)
 test_plan = {

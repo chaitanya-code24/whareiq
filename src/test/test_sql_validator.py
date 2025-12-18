@@ -1,4 +1,4 @@
-from sql_validator import validate_sql
+from src.sql_validator import validate_sql
 
 safe_sql = "SELECT users.email FROM users LIMIT 10"
 unsafe_sql_1 = "DELETE FROM users"
