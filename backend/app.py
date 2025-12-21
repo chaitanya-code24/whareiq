@@ -1,6 +1,10 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
-from src.llm import UniversalLLM
+from llm import UniversalLLM
+import psycopg2
+from auth import get_current_user
+from crypto import encrypt
+from db import get_internal_db_connection
 
 # ---------------------------------
 # App Initialization
@@ -23,6 +27,13 @@ class PlanResponse(BaseModel):
     needs_clarification: bool
     clarification_question: str | None = None
     plan: dict | None = None
+
+class DatabaseConnectRequest(BaseModel):
+    host: str
+    port: int
+    db_name: str
+    username: str
+    password: str
 
 
 # ---------------------------------
@@ -94,3 +105,53 @@ def generate_plan(payload: PlanRequest):
     # Normal Safe Return
     # -----------------------------
     return plan_json
+
+
+@app.post("/connect-database")
+def connect_database(
+    payload: DatabaseConnectRequest,
+    user_id: str = Depends(get_current_user)
+):
+    # 1. Test connection to user's DB
+    try:
+        conn = psycopg2.connect(
+            host=payload.host,
+            port=payload.port,
+            dbname=payload.db_name,
+            user=payload.username,
+            password=payload.password,
+            connect_timeout=5
+        )
+        conn.close()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Cannot connect to database")
+
+    # 2. Store encrypted credentials
+    internal_conn = get_internal_db_connection()
+    cur = internal_conn.cursor()
+
+    cur.execute("""
+        INSERT INTO user_database
+        (user_id, host, port, db_name, username, encrypted_password)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        ON CONFLICT (user_id)
+        DO UPDATE SET
+          host = EXCLUDED.host,
+          port = EXCLUDED.port,
+          db_name = EXCLUDED.db_name,
+          username = EXCLUDED.username,
+          encrypted_password = EXCLUDED.encrypted_password;
+    """, (
+        user_id,
+        payload.host,
+        payload.port,
+        payload.db_name,
+        payload.username,
+        encrypt(payload.password)
+    ))
+
+    internal_conn.commit()
+    cur.close()
+    internal_conn.close()
+
+    return {"status": "connected"}

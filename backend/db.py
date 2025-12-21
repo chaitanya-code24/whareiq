@@ -23,6 +23,14 @@ DATABASE_POOL = psycopg2.pool.SimpleConnectionPool(
     password=os.getenv("POSTGRES_PASSWORD"),
 )
 
+# ---------------------------------
+# Internal DB Alias (Semantic Clarity)
+# ---------------------------------
+def get_internal_db_connection():
+    """
+    Returns a connection to WhareIQ's internal metadata database.
+    """
+    return get_db_connection()
 
 # ---------------------------------
 # Get / Release DB Connection

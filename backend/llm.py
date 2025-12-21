@@ -14,7 +14,7 @@ load_dotenv()
 # Load Semantic Plan JSON Schema
 # ---------------------------------
 ROOT_DIR = Path(__file__).resolve().parent.parent
-SCHEMA_PATH = ROOT_DIR / "specs" / "semantic_plan.schema.json"
+SCHEMA_PATH = ROOT_DIR / "backend" / "specs" / "semantic_plan.schema.json"
 
 with open(SCHEMA_PATH, "r") as f:
     SEMANTIC_PLAN_SCHEMA = json.load(f)
