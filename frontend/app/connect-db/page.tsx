@@ -3,6 +3,7 @@
 import { useAuth } from "@/lib/useAuth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import LogoutButton from "@/components/LogoutButton";
 
 export default function ConnectDBPage() {
   const { user, loading } = useAuth();

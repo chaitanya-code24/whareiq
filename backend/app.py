@@ -106,12 +106,13 @@ def generate_plan(payload: PlanRequest):
     # -----------------------------
     return plan_json
 
-
 @app.post("/connect-database")
 def connect_database(
     payload: DatabaseConnectRequest,
-    user_id: str = Depends(get_current_user)
+    user: dict = Depends(get_current_user)  # ✅ FIX 1
 ):
+    user_id = user["id"]  # ✅ FIX 2
+
     # 1. Test connection to user's DB
     try:
         conn = psycopg2.connect(
@@ -142,7 +143,7 @@ def connect_database(
           username = EXCLUDED.username,
           encrypted_password = EXCLUDED.encrypted_password;
     """, (
-        user_id,
+        user_id,                      # ✅ now a UUID string
         payload.host,
         payload.port,
         payload.db_name,
