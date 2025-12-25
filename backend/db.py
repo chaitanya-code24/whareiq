@@ -3,7 +3,7 @@ import psycopg2.pool
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-
+from crypto import decrypt
 # ---------------------------------
 # Load .env from project root
 # ---------------------------------
@@ -76,3 +76,28 @@ def execute_select(query: str, params=None):
     finally:
         if conn is not None:
             release_db_connection(conn)
+
+def get_user_database_credentials(user_id: str):
+    conn = get_internal_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT host, port, db_name, username, encrypted_password
+        FROM user_database
+        WHERE user_id = %s
+    """, (user_id,))
+
+    row = cur.fetchone()
+    cur.close()
+    conn.close()
+
+    if not row:
+        return None
+
+    return {
+        "host": row[0],
+        "port": row[1],
+        "db_name": row[2],
+        "username": row[3],
+        "password": decrypt(row[4]),
+    }

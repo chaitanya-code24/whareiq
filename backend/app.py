@@ -5,6 +5,15 @@ import psycopg2
 from auth import get_current_user
 from crypto import encrypt
 from db import get_internal_db_connection
+from fastapi.middleware.cors import CORSMiddleware
+
+from semantic_storage import validate_semantic_plan
+from sql_builder import build_sql_from_plan
+from sql_validator import validate_sql
+from limit_enforcer import enforce_row_limit
+from schema import QueryRequest
+from db import get_user_database_credentials
+from answer_generator import generate_answer
 
 # ---------------------------------
 # App Initialization
@@ -13,6 +22,13 @@ app = FastAPI(
     title="WhareIQ API",
     description="Semantic SQL & Data Warehouse Intelligence Engine",
     version="v1"
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # frontend origin
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -156,3 +172,60 @@ def connect_database(
     internal_conn.close()
 
     return {"status": "connected"}
+
+
+@app.post("/query")
+def query_data(
+    payload: QueryRequest,
+    user: dict = Depends(get_current_user)
+):
+    user_id = user["id"]
+
+    # 1️⃣ Load user's DB credentials
+    db_creds = get_user_database_credentials(user_id)
+    if not db_creds:
+        raise HTTPException(
+            status_code=400,
+            detail="No database connected for this user"
+        )
+
+    # 2️⃣ Generate semantic plan using LLM
+    llm = UniversalLLM()
+    semantic_plan = llm.generate_plan(payload.question)
+
+    # 3️⃣ Validate semantic plan schema
+    validate_semantic_plan(semantic_plan)
+
+    # 4️⃣ Resolve semantic plan → SQL
+    sql = build_sql_from_plan(semantic_plan)
+
+    # 5️⃣ Enforce SQL safety
+    validate_sql(sql)
+    sql = enforce_row_limit(sql)
+
+    # 6️⃣ Execute SQL on USER database
+    try:
+        conn = psycopg2.connect(
+            host=db_creds["host"],
+            port=db_creds["port"],
+            dbname=db_creds["db_name"],
+            user=db_creds["username"],
+            password=db_creds["password"],
+            connect_timeout=5
+        )
+        cur = conn.cursor()
+        cur.execute(sql)
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    # 7️⃣ Human summary (V1: simple deterministic)
+    answer = generate_answer(semantic_plan, rows)
+
+    return {
+        "answer": answer,
+        "sql": sql,
+        "rows": rows
+    }
